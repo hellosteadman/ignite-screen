@@ -1,0 +1,5 @@
+.env
+/config.codekit
+/db.sqlite
+/venv
+*.pyc

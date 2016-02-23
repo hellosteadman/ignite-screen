@@ -1,0 +1,16 @@
+<li class="media{% block media_class %}{% endblock %}">
+    <div class="pull-left">
+        <a href="{{ user.url }}" class="thumbnail">
+            <img class="media-object" src="{{ user.avatar.url }}" alt="{{ user }}">
+        </a>
+    </div>
+    <div class="media-body">
+        {% block body %}{{ text|linebreaks }}{% endblock %}
+        <span class="text-muted">
+            {% block icon %}{% endblock %}
+            Posted on {{ date|date:'jS F Y' }} at
+            {% if date.minute %}{{ date|time:'g:iA'|lower }}{% else %}{{ date|time:'gA'|lower }}{% endif %}
+            by <a href="{{ user.url }}" target="_blank">{{ user.display_name }}</a>
+        </span>
+    </div>
+</li>

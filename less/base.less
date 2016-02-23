@@ -1,0 +1,142 @@
+body.event-live-stream {
+    #stream-wrap {
+        background: #333;
+        padding: 30px 0;
+
+        h2 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+
+        .media {
+            background: #fff;
+            color: #333;
+            padding: 0;
+            height: 0;
+            opacity: 0;
+            margin: 0;
+
+            &.inactive {
+                transition: all .5s;
+            }
+
+            &.active {
+                height: auto;
+                opacity: 1;
+                padding: 15px;
+                margin: .5em 0;
+            }
+
+            &.tweet, &.instagram-photo {
+                color: #fff;
+
+                .media-body a {
+                    color: #fff;
+                    text-decoration: none;
+                }
+            }
+
+            &.tweet { background: #4099ff; }
+            &.instagram-photo { background: #125688; }
+
+            .media-object {
+                width: 48px;
+            }
+
+            .media-body {
+                font-family: 'Merriweather', serif;
+                font-size: 1.5em;
+                line-height: 1.25em;
+
+                .thumbnail {
+                    display: inline-block;
+
+                    img {
+                        max-width: 100%;
+                    }
+                }
+
+                .text-muted {
+                    color: rgba(255, 255, 255, .5);
+                    a {
+                        color: rgba(255, 255, 255, .5);
+                        &:hover {
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+
+        .speakers {
+            margin: 0 0 0 .3%;;
+            padding: 0;
+            list-style-type: none;
+            position: relative;
+
+            li {
+                float: left;
+                width: 33%;
+                margin-right: .3%;
+
+                &.more {
+                    cursor: default;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    background: #ddd;
+
+                    span.plus {
+                        color: #fff;
+                        text-align: center;
+                        display: block;
+                    }
+
+                    @media screen and (min-width: 360px) {
+                        height: 242px;
+                        span.plus {
+                            font-size: 3em;
+                            line-height: 2em;
+                        }
+                    }
+
+                    @media screen and (min-width: 420px) {
+                        height: 156px;
+                        span.plus {
+                            font-size: 7em;
+                            line-height: 1.4em;
+                        }
+                    }
+
+                    @media screen and (min-width: 768px) {
+                        height: 96px;
+                        span.plus {
+                            font-size: 4em;
+                            line-height: 1.25em;
+                        }
+                    }
+
+                    @media screen and (min-width: 1170px) {
+                        height: 118px;
+                        span.plus {
+                            font-size: 5em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.has-background {
+        background-size: cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        #stream-wrap {
+            background-color: transparent;
+        }
+    }
+}

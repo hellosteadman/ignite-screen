@@ -1,0 +1,14 @@
+{% extends 'wall/stream/item.inc.html' %}
+{% load instagram %}
+
+{% block media_class %} instagram-photo{% endblock %}
+{% block icon %}<i class="fa fa-instagram"></i>{% endblock %}
+{% block body %}
+    {% if image %}
+        <a href="{{ url }}" target="_blank" class="thumbnail">
+            <img src="{{ image.url }}">
+        </a>
+    {% endif %}
+
+    {{ text|photo|linebreaks }}
+{% endblock %}

@@ -1,0 +1,99 @@
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{ event.name }} - Live stream</title>
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,800,300" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    </head>
+    <body class="event-live-stream{% if event.stream_background %} has-background{% endif %}"{% if event.stream_background %} style="background-image: url({{ event.stream_background.url }}); "{% endif %}>
+        <div id="stream-wrap">
+            <div class="container">
+                <ul class="media-list" id="stream-content">
+
+                </ul>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(
+                function() {
+                    var refreshStream = function(timestamp) {
+                        var url = '?_ts=' + parseInt(new Date().getTime() / 1000);
+
+                        if(typeof(timestamp) != 'undefined') {
+                            url += '&since=' + timestamp;
+                        }
+
+                        $.ajax(
+                            {
+                                url: url,
+                                dataType: 'html',
+                                context: $('#stream-content'),
+                                success: function(html) {
+                                    var ul = $('#stream-content');
+                                    var delay = 0;
+                                    var added = false;
+                                    var addItem = function(item) {
+                                        ul.prepend(item);
+
+                                        if(typeof(timestamp) == 'undefined') {
+                                            item.addClass('active');
+                                        } else {
+                                            item.addClass('inactive');
+                                            setTimeout(
+                                                function() {
+                                                    item.addClass('active');
+                                                    setTimeout(
+                                                        function() {
+                                                            item.removeClass('inactive');
+                                                        },
+                                                        250
+                                                    )
+                                                },
+                                                delay * 250
+                                            );
+                                        }
+
+                                        delay += 1
+                                        added = true;
+                                    };
+
+                                    $('<ul>' + html + '</ul>').find('li.media').each(
+                                        function() {
+                                            addItem($(this));
+                                        }
+                                    );
+
+                                    if(added) {
+                                        setTimeout(
+                                            function() {
+                                                refreshStream(
+                                                    parseInt(new Date().getTime() / 1000)
+                                                )
+                                            },
+                                            5000
+                                        );
+                                    } else {
+                                        setTimeout(
+                                            function() {
+                                                refreshStream(timestamp)
+                                            },
+                                            10000
+                                        );
+                                    }
+                                }
+                            }
+                        );
+                    };
+
+                    refreshStream();
+                }
+            );
+        </script>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+{% extends 'wall/stream/item.inc.html' %}
+{% load twitter %}
+
+{% block media_class %} tweet{% endblock %}
+{% block icon %}<i class="fa fa-twitter"></i>{% endblock %}
+{% block body %}
+    {{ text|tweet|linebreaks }}
+
+    {% if image %}
+        <a href="{{ url }}" target="_blank" class="thumbnail">
+            <img src="{{ image.url }}">
+        </a>
+    {% endif %}
+{% endblock %}
