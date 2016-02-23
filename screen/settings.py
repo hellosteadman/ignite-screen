@@ -107,12 +107,11 @@ AWS_PRELOAD_METADATA = True
 S3DIRECT_REGION = 'eu-west-1'
 STORE_ASSETS_ROOT = 'storefiles'
 
-DEFAULT_FILE_STORAGE = 'screen.s3.MediaRootS3BotoStorage'
-
 if not DEBUG:
+    DEFAULT_FILE_STORAGE = 'screen.s3.MediaRootS3BotoStorage'
     STATICFILES_STORAGE = 'screen.s3.StaticRootS3BotoStorage'
 
-MEDIA_URL = '//%s/media/' % AWS_S3_CUSTOM_DOMAIN
+MEDIA_URL = DEBUG and '/media/' or '//%s/media/' % AWS_S3_CUSTOM_DOMAIN
 STATIC_URL = DEBUG and '/static/' or ('//%s/static/' % AWS_S3_CUSTOM_DOMAIN)
 
 # S3 direct upload

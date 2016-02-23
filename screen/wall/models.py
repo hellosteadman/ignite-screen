@@ -8,6 +8,10 @@ class Event(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=30, unique=True)
     stream_updated = models.DateTimeField(null=True, editable=False)
+    stream_background = models.ImageField(
+        max_length=255, null=True, blank=True,
+        upload_to='events/stream'
+    )
 
     def __unicode__(self):
         return self.name
