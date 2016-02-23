@@ -1,5 +1,7 @@
 from django.db import models
 from importlib import import_module
+from django_rq import get_queue
+from screen.wall.tasks import event_research
 
 
 class Event(models.Model):
@@ -9,6 +11,16 @@ class Event(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def research(self):
+        queue = get_queue()
+        a = (self.pk,)
+
+        for job in queue.jobs:
+            if not job.result and job.func == event_research and tuple(job.args) == a:
+                return
+
+        event_research.delay(self.pk)
 
     class Meta:
         ordering = ('slug',)

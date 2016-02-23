@@ -4,13 +4,21 @@ from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.utils.timezone import now, utc
 from screen.wall.models import Event
+from django.views.decorators.cache import cache_page
 
 
 @atomic
+@cache_page(5)
 def stream(request, slug):
     event = get_object_or_404(Event, slug=slug)
-    items = event.stream.all()
 
+    if event.searches.exists():
+        if not event.stream_updated:
+            event.research()
+        elif (now() - event.stream_updated).total_seconds > 1:
+            event.research()
+
+    items = event.stream.all()
     if 'since' in request.GET:
         items = items.filter(
             date__gte=datetime.utcfromtimestamp(
