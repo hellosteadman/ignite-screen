@@ -27,19 +27,6 @@ INSTALLED_APPS = (
     'screen.wall'
 )
 
-BOWER_INSTALLED_APPS = (
-    'bootstrap#3.2.0',
-    'fontawesome#4.2.0',
-    'imagesloaded#3.1.8',
-    'jquery-infinite-scroll#2.1.0',
-    'jquery.payment#1.2.3',
-    'video.js#4.12.5',
-    'videojs-embed#0.1.0',
-    'waypoints#3.1.1',
-    'zeroclipboard#2.2.0',
-    'plunja'
-)
-
 MIDDLEWARE_CLASSES = (
     'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
