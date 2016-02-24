@@ -92,7 +92,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Static asset configuration
-BOWER_COMPONENTS_ROOT = BASE_DIR
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
