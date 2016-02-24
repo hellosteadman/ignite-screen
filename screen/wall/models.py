@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 from importlib import import_module
 from django_rq import get_queue
 from screen.wall.tasks import event_research
@@ -21,8 +22,9 @@ class Event(models.Model):
         a = (self.pk,)
 
         for job in queue.jobs:
-            if not job.result and job.func == event_research and tuple(job.args) == a:
-                return
+            if not job.result and job.func == event_research:
+                if tuple(job.args) == a:
+                    return
 
         event_research.delay(self.pk)
 
@@ -77,6 +79,13 @@ class StreamItem(models.Model):
 
     def __unicode__(self):
         return self.text
+
+    def save(self, *args, **kwargs):
+        super(StreamItem, self).save(*args, **kwargs)
+        self.event.stream_updated = now()
+        self.event.save(
+            update_fields=('stream_updated',)
+        )
 
     def render(self):
         module, klass = self.provider.rsplit('.', 1)
