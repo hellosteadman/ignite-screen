@@ -15,7 +15,7 @@ def stream(request, slug):
     if event.searches.exists():
         if not event.stream_updated:
             event.research()
-        elif (now() - event.stream_updated).total_seconds > 1:
+        elif (now() - event.stream_updated).total_seconds > 60:
             event.research()
 
     items = event.stream.all()
