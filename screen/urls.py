@@ -9,4 +9,13 @@ urlpatterns = [
 
 if settings.DEBUG:
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-    urlpatterns += staticfiles_urlpatterns()
+    from django.views.static import serve
+
+    urlpatterns += staticfiles_urlpatterns() + [
+        url(
+            r'^media/(?P<path>.*)$', serve,
+            {
+                'document_root': settings.MEDIA_ROOT
+            }
+        )
+    ]
