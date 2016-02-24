@@ -36,9 +36,15 @@
                                     var ul = $('#stream-content');
                                     var delay = 0;
                                     var added = false;
+                                    var lastTime = null;
                                     var addItem = function(item) {
-                                        ul.prepend(item);
+                                        var time = item.data('date');
 
+                                        if(lastTime == null || time > lastTime) {
+                                            lastTime = time;
+                                        }
+
+                                        ul.prepend(item);
                                         if(typeof(timestamp) == 'undefined') {
                                             item.addClass('active');
                                         } else {
@@ -67,23 +73,13 @@
                                         }
                                     );
 
-                                    if(added) {
-                                        setTimeout(
-                                            function() {
-                                                refreshStream(
-                                                    parseInt(new Date().getTime() / 1000)
-                                                )
-                                            },
-                                            5000
-                                        );
-                                    } else {
-                                        setTimeout(
-                                            function() {
-                                                refreshStream(timestamp)
-                                            },
-                                            10000
-                                        );
-                                    }
+                                    setTimeout(
+                                        function() {
+                                            console.log('Getting items from', lastTime ? lastTime : timestamp);
+                                            refreshStream(lastTime ? lastTime : timestamp)
+                                        },
+                                        10000
+                                    );
                                 }
                             }
                         );

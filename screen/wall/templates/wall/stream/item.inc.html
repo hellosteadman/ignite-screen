@@ -1,4 +1,4 @@
-<li class="media{% block media_class %}{% endblock %}">
+<li class="media{% block media_class %}{% endblock %}" data-date="{{ date|date:'U' }}">
     <div class="pull-left">
         <a href="{{ user.url }}" class="thumbnail">
             <img class="media-object" src="{{ user.avatar.url }}" alt="{{ user }}">

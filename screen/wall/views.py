@@ -2,30 +2,32 @@ from datetime import datetime
 from django.db.transaction import atomic
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
-from django.utils.timezone import now, utc
+from django.utils.timezone import now, get_current_timezone
 from screen.wall.models import Event
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import never_cache
 
 
 @atomic
-@cache_page(5)
+@never_cache
 def stream(request, slug):
     event = get_object_or_404(Event, slug=slug)
 
     if event.searches.exists():
-        if not event.stream_updated:
+        if event.stream_updated is None:
             event.research()
-        elif (now() - event.stream_updated).total_seconds > 60:
+        elif (now() - event.stream_updated).total_seconds() > 1:
             event.research()
 
     items = event.stream.all()
     if 'since' in request.GET:
+        since = datetime.fromtimestamp(
+            int(request.GET['since'])
+        ).replace(
+            tzinfo=get_current_timezone()
+        )
+
         items = items.filter(
-            date__gte=datetime.utcfromtimestamp(
-                int(request.GET['since'])
-            ).replace(
-                tzinfo=utc
-            )
+            date__gte=since
         )
     else:
         items = items[:20]

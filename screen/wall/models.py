@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.timezone import now
 from importlib import import_module
 from django_rq import get_queue
 from screen.wall.tasks import event_research
@@ -8,6 +7,7 @@ from screen.wall.tasks import event_research
 class Event(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=30, unique=True)
+    stream_updating = models.BooleanField(default=False)
     stream_updated = models.DateTimeField(null=True, editable=False)
     stream_background = models.ImageField(
         max_length=255, null=True, blank=True,
@@ -79,13 +79,6 @@ class StreamItem(models.Model):
 
     def __unicode__(self):
         return self.text
-
-    def save(self, *args, **kwargs):
-        super(StreamItem, self).save(*args, **kwargs)
-        self.event.stream_updated = now()
-        self.event.save(
-            update_fields=('stream_updated',)
-        )
 
     def render(self):
         module, klass = self.provider.rsplit('.', 1)
