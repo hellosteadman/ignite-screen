@@ -17,12 +17,12 @@ pulls all the relevant posts matching those criteria.
 
 You'll need to set the following environment variables in Heroku:
 
-`DATABASE_URL` - The PostgreSQL database URI
-`DJANGO_SECRET_KEY` - Django devs should know this one (here's a [great Django Key generator](http://www.miniwebtool.com/django-secret-key-generator/))
-`ENV` - Setting this to 'live' sets `DEBUG` to `False`
-`INSTAGRAM_ACCESS_TOKEN` and `INSTAGRAM_CLIENT_SECRET` - Your Instagram OAuth toksns
-`TWITTER_ACCESS_SECRET`, `TWITTER_ACCESS_TOKEN`, `TWITTER_CONSUMER_KEY` and `TWITTER_CONSUMER_SECRET` - Your Instagram OAuth toksns
-`MEMCACHEDCLOUD_SERVERS`, `MEMCACHEDCLOUD_USERNAME` and `MEMCACHEDCLOUD_PASSWORD` - memcached details
-`REDIS_URL` - Heroku Redis URI
+- `DATABASE_URL` - The PostgreSQL database URI
+- `DJANGO_SECRET_KEY` - Django devs should know this one (here's a [great Django Key generator](http://www.miniwebtool.com/django-secret-key-generator/))
+- `ENV` - Setting this to 'live' sets `DEBUG` to `False`
+- `INSTAGRAM_ACCESS_TOKEN` and `INSTAGRAM_CLIENT_SECRET` - Your Instagram OAuth toksns
+- `TWITTER_ACCESS_SECRET`, `TWITTER_ACCESS_TOKEN`, `TWITTER_CONSUMER_KEY` and `TWITTER_CONSUMER_SECRET` - Your Instagram OAuth toksns
+- `MEMCACHEDCLOUD_SERVERS`, `MEMCACHEDCLOUD_USERNAME` and `MEMCACHEDCLOUD_PASSWORD` - memcached details
+- `REDIS_URL` - Heroku Redis URI
 
 Have fun :)
